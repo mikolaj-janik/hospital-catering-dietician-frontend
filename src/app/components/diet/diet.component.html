@@ -1,0 +1,42 @@
+<h2>Diety</h2>
+<hr>
+<div class="container-fluid">
+    @if(isResponseHere && diets.length > 0) {
+        <div class="row flex-column align-items-center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">nazwa</th>
+                        <th scope="col ms-3">szczegóły</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(diet of diets; track diet.id) {
+                        <tr>
+                            <th scope="row">{{ findArrayIndex(diet.id) + 1 }}</th>
+                            <td>{{ diet.name }}</td> 
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-rounded btn-sm"
+                                    (click)="redirectToDetails(diet.id)"
+                                    >
+                                zobacz więcej
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    @else if (!isResponseHere){
+        <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+          <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+        </div>
+      } @else {
+        <h3 style="font-weight: 400;">Brak diet do wyświetlenia</h3>
+      }
+    
+</div>

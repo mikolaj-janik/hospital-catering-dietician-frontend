@@ -1,0 +1,31 @@
+<div class="search-bar-container"
+    [style.padding-right]="paddingEnd()"
+    cdkOverlayOrigin
+    #overlayOrigin="cdkOverlayOrigin" 
+    [ngClass]="{'opened mat-elevation-z2': overlayOpen()}">
+    <button mat-icon-button (click)="search(searchInput.value)">
+        <mat-icon class="fas fa-search"></mat-icon>
+    </button>
+    <input 
+    #searchInput 
+    [value]="searchTerm()"
+    [placeholder]="handleSearchContent(routePath$ | async)" 
+    (click)="handleClickedInput()"
+    (keydown.ENTER)="search(searchInput.value)"
+    />
+    @if (isSearchTerm()) {
+        <button mat-icon-button (click)="clearSearch()">
+            <mat-icon class="fas fa-times"></mat-icon>
+        </button>
+    }
+</div>
+
+<ng-template
+cdkConnectedOverlay 
+[cdkConnectedOverlayOrigin]="overlayOrigin"
+[cdkConnectedOverlayOpen]="overlayOpen()"
+(overlayOutsideClick)="overlayOpen.set(false)"
+>
+
+    <app-search-overlay></app-search-overlay>
+</ng-template>

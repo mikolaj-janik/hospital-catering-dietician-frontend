@@ -1,0 +1,75 @@
+<h2>Dietetycy</h2>
+<hr>
+<p class="ms-3">
+    <button class="btn" style="color: white; background-color: rgb(136, 136, 136);" (click)="redirectToDieticians()">Wstecz</button>
+</p>
+@if(isResponseHere && dietician != null) {
+    <div class="container-fluid">
+        <div class="row mb-4 flex-column align-items-center justify-content-center">
+            <div class="col-lg-5 col-md-9 col-sm-12"> 
+                <div class="card">
+                    <div class="card-body pb-2">
+                        @if(dietician.picture != '') {
+                            <div class="row flex-column align-items-center">
+                                <div class="col">
+                                    <a role="button" title="Powiększ zdjęcie" (click)="openDialog('data:image/jpeg;base64,' + dietician.picture)">
+                                        <img
+                                            [src]="'data:image/jpeg;base64,' + dietician.picture" 
+                                        /> 
+                                    </a>
+                                <h4 class="mb-3 col">{{ dietician.name }} {{ dietician.surname }}</h4>
+                                </div>
+                                
+                            </div>
+                        } @else {
+                            <h4 class="mb-3">{{ dietician.name }} {{ dietician.surname }}</h4>
+                        }
+                        <hr>
+                        <h5>Adres email</h5>
+                        <p>{{ dietician.email }}</p>
+                        <hr>
+                        <h5>Szpital</h5>
+                        <p><a role="button" title="Kliknij, aby zobaczyć szczegóły szpitala" (click)="redirectToHospitalDetails()">
+                            {{ dietician.hospital.name }}
+                            </a>
+                        </p>
+                        <hr>
+                        <h5>Oddziały</h5>
+                        @if (wards.length > 0) {
+                            <ul>
+                                @for(ward of wards; track ward.id) {
+                                    <li>
+                                        <p class="mb-2">
+                                            <a role="button" (click)="redirectToWardDetails(ward.id)" title="Kliknij, aby zobaczyć szczegóły oddziału">
+                                                {{ ward.name }}
+                                            </a>
+                                        </p>
+                                    </li>
+                                }
+                            </ul>
+                        } @else {
+                            <p>Dietetyk nie jest przypisany do żadnego oddziału</p>
+                        }
+                    </div>
+                    <div class="card-body pt-0">
+                        <button type="button"
+                                class="btn btn-link btn-rounded btn-md"
+                                style="color:#ff4646"
+                                [swal]="{ title: 'Usuń konto dietetyka', text: 'Czy na pewno chcesz usunąć dietetyka? Nie będzie możliwe jego odzyskanie', 
+                                          showCancelButton: true, cancelButtonText: 'Anuluj'
+                                         }"
+                                (confirm)="handleDeleteDietician()"
+                        >
+                        Usuń dietetyka
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+} @else if(!isResponseHere) {
+    <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+        <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+    </div>
+}
+

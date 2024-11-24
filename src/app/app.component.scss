@@ -1,0 +1,35 @@
+mat-toolbar {
+    position: relative;
+    z-index: 5;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 64px);
+}
+
+mat-sidenav, mat-sidenav-content {
+    transition: all 250ms ease-in-out;
+}
+
+app-search-bar {
+    transition: all 350ms ease-in-out;
+}
+
+.gradient-custom-2 {
+    background: #ffd4a0;
+    
+    background: -webkit-linear-gradient(to right, #35ee24, #d8363a, #ffd3e4, #2f7cf0);
+    
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+}
+
+.content {
+    padding: 24px;
+}
+

@@ -1,0 +1,59 @@
+@if(isResponseHere && hospital) {
+    <h2>{{ hospital.name }}</h2>
+    <hr>
+    <p class="ms-3">
+        <button class="btn" style="color: white; background-color: rgb(136, 136, 136);" (click)="redirectToHospitals()">Wstecz</button>
+        <button class="btn btn-primary ms-3" (click)="redirectToAddWard()">Dodaj nowy oddział</button>
+    </p>
+    @if(wards.length > 0) {
+        <div class="container-fluid">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">nazwa oddziału</th>
+                        <th scope="col">telefon</th> 
+                        <th scope="col">liczba pacjentów</th>
+                        <th scope="col"></th> 
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(ward of wards; track ward.id) {
+                        <tr>
+                            <th scope="row">{{ findArrayIndex(ward.id) + 1 }}</th>
+                            <td>{{ ward.name }}</td> 
+                            <td>{{ ward.phoneNumber }}</td>
+                            <td>{{ getPatientsQuantity(ward.id) }}</td> 
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-rounded btn-sm"
+                                    (click)="redirectToWardDetails(ward.id)"
+                                    >
+                                    zobacz więcej
+                                </button>
+                            </td>
+                            <td>
+                                <a role="button" class="fas fa-trash-alt mt-3" 
+                                style="color: rgb(192, 35, 35);"
+                                [swal]="{ title: 'Usuń oddział', text: 'Czy na pewno chcesz usunąć oddział?', 
+                                  showCancelButton: true, cancelButtonText: 'Anuluj'
+                                 }"
+                                (confirm)="handleDeleteWard(ward.id)" 
+                                ></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    } @else {
+        <h4>Szpital nie posiada jeszcze żadnego oddziału!</h4>
+    }
+} @else if (!isResponseHere) {
+    <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+        <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+    </div>
+}
+

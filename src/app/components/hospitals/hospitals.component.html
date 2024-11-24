@@ -1,0 +1,42 @@
+<h2>Szpitale</h2>
+<hr>
+<div class="container-fluid">
+    @if(isResponseHere && hospitals.length > 0) {
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-5" *ngFor="let hospital of hospitals">
+            
+            <div class="card">
+                <div class="bg-image hover-overlay hover-zoom" mdbRipple rippleColor="light">
+                  <img [src]="'data:image/jpeg;base64,' + hospital.picture" class="img-fluid"/>
+                  <a role="button" (click)="redirectToHospitalDetails(hospital.id)">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ hospital.name }}</h5>
+                  <p class="card-text mb-0">ul. {{ hospital.street }} {{ hospital.buildingNo }}</p>
+                  <p class="card-text mb-0">{{ hospital.zipCode }}</p>
+                  <p class="card-text">{{ hospital.city }}</p>
+                  <p class="card-text">Nr. tel. {{ hospital.phoneNumber }}</p>
+                  <button (click)="redirectToHospitalDetails(hospital.id)" class="btn btn-primary">Zobacz oddziały</button>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+      <mat-paginator
+                  [pageSizeOptions]="[6, 12, 18, 24]" 
+                  [pageSize]="pageSize"
+                  [pageIndex]="pageNumber"
+                  [length]="totalElements"
+                  (page)="onPageEvent($event)"
+                  ></mat-paginator>
+    </div>
+    } @else if (!isResponseHere){
+      <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+        <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+      </div>
+    } @else {
+      <h3 style="font-weight: 400;">Brak szpitali do wyświetlenia</h3>
+    }
+</div>

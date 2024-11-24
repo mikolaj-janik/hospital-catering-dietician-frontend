@@ -1,0 +1,49 @@
+<a 
+    class="menu-item"
+    mat-list-item 
+    [routerLink]="item().route"
+    routerLinkActive="selected-menu-item"
+    #rla="routerLinkActive"
+    [activated]="rla.isActive"
+    >
+        <mat-icon [ngClass]="item().icon" matListItemIcon style="width: 30px;"></mat-icon>
+        @if(!collapsed()) {
+            <span matListItemTitle>{{ item().label }}</span>    
+        }
+
+        @if(item().subItems) {
+            <span matListItemMeta>
+                @if(nestedMenuOpen()) {
+                    <a (click)="toggleNested()">
+                        <i class="fas fa-angle-up me-2"></i>
+                    </a>
+                    
+                } @else {
+                    <a (click)="toggleNested()">
+                        <i class="fas fa-angle-down me-2"></i>
+                    </a>
+                }
+            </span>
+        }
+</a>
+
+@if(item().subItems && nestedMenuOpen()) {
+    <div @expandContractMenu>
+        @for(subItem of item().subItems; track subItem.label) {
+            <a 
+                class="menu-item"
+                mat-list-item 
+                [class.indented]="!collapsed()"
+                [routerLink]="item().route + '/' + subItem.route"
+                routerLinkActive=""
+                #rla="routerLinkActive"
+                [activated]="rla.isActive"
+            >
+                <mat-icon [ngClass]="subItem.icon" matListItemIcon style="width: 30px;"></mat-icon>
+                @if(!collapsed()) {
+                    <span matListItemTitle>{{ subItem.label }}</span>    
+                }
+            </a>
+        }
+    </div>
+}

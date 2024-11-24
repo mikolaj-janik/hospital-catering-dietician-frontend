@@ -1,0 +1,17 @@
+<div class="sidenav-header" *ngIf="currentUser">
+    <img [width]="profilePicSize()" [height]="profilePicSize()" [src]="'data:image/jpeg;base64,' + currentUser.profilePicture">
+    <div class="header-text" [class.hide-header-text]="sideNavCollapsed()">
+        <h2>Administrator</h2>
+        <p>{{ currentUser.name }} {{ currentUser.surname }}</p>
+    </div>
+</div>
+<mat-nav-list>
+    @for(item of menuItems(); track item.label) {
+        <app-menu-item [item]="item" [collapsed]="sideNavCollapsed()"></app-menu-item>
+    }
+    
+    <a class="menu-item" mat-list-item (click)="logout()"> 
+        <mat-icon class="fas fa-sign-out-alt" matListItemIcon style="width: 30px;"></mat-icon>
+        <span matListItemTitle *ngIf="!sideNavCollapsed()">Wyloguj się</span> 
+    </a>
+</mat-nav-list>  

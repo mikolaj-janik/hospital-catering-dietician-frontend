@@ -1,0 +1,73 @@
+<h2>Posiłki</h2>
+<hr>
+@if(meal != null) {
+    <div class="container-fluid">
+        <div class="card">
+            <div class="row align-items-center d-flex p-3">
+                <div class="image-container ms-md-4 col-md-3 mb-2">
+                    <a role="button" (click)="openDialog('data:image/jpeg;base64,' + meal.image)">
+                        <img [src]="'data:image/jpeg;base64,' + meal.image">
+                    </a>
+                </div>
+                <div class="col-md-8 meal-column">
+                    <div class="card-body pb-2"><h4>{{ meal.name }}</h4></div>
+                    <div class="card-body pt-0" style="font-size: large;">
+                        {{ meal.description }}
+                    </div>
+                    <p class="mb-4 ms-4">
+                        <small class="text-muted">rodzaj: {{ meal.type }}</small><br>
+                        <small class="text-muted">dieta: {{ meal.diet.name }}</small>
+                    </p>
+                    <div class="col-lg-6 col-md-3 col-sm-1 ms-3">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Kalorie</th>
+                                    <th scope="col">Białko</th>
+                                    <th scope="col">Węglowodany</th> 
+                                    <th scope="col">Tłuszcze</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ meal.calories }} kcal</td>
+                                    <td>{{ meal.protein }} g</td> 
+                                    <td>{{ meal.carbohydrates }} g</td>
+                                    <td>{{ meal.fats }} g</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="ms-3">
+                        @if(meal.price === 0 ) {
+                            <p class="mb-0 mt-3 ms-3">Posiłek bezpłatny</p>
+                        } @else {
+                            <h6 class="mb-0 mt-3 ms-3">Cena: {{ meal.price }} zł</h6>
+                        }
+                    </p>
+                    <div class="ms-2 pt-1">
+                        <button type="button"
+                        class="btn btn-link btn-rounded fw-bold"
+                        style="color:#ff4646"
+                        (click)="redirectToMeals()"
+                        >
+                        Wstecz
+                        </button>
+                        <button type="button"
+                            class="btn btn-link btn-rounded fw-bold"
+                            (click)="redirectToEdit(meal.id)"
+                        >
+                        Edytuj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+} @else if (!isResponseHere){
+    <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+      <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+    </div>
+  } @else {
+    <h3 style="font-weight: 400;">Nie znaleziono posiłku</h3>
+  }

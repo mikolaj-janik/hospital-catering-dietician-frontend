@@ -1,0 +1,83 @@
+<div class="container mt-5">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black mb-3" style="background-color: #f1fafd;">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-4 mx-md-4">
+
+                <div class="text-center">
+                  <img src="assets/images/logo.jpeg"
+                    style="width: 185px;" alt="logo">
+                  <h4 class="mt-1 mb-5 pb-1">Jesteśmy drużyną CaterHealth!</h4>
+                </div>
+
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <h5 style="font-weight: 400; margin-bottom: 18px;">Zaloguj się</h5>
+
+                  <mdb-form-control>
+                    <label mdbLabel class="form-label" for="formEmail" style="margin-bottom: 1px;">Adres e-mail</label>
+                    <input mdbInput type="text" id="formEmail" class="form-control" formControlName="email" style="margin-bottom: 30px;"/>
+                  </mdb-form-control>
+
+                  <div *ngIf="loginForm.get('email')?.errors?.['required'] && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="alert alert-danger mt-1">
+                    <span>Adres e-mail jest wymagany.</span>
+                  </div>
+
+                  <div *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" class="alert alert-danger mt-1">
+                    <span>To nie jest adres email!</span>
+                  </div>
+
+                  <mdb-form-control>
+                    <label mdbLabel class="form-label" for="formPassword" style="margin-bottom: 1px;">Hasło</label>
+                    <input mdbInput type="password" id="formPassword" class="form-control" formControlName="password" style="margin-bottom: 30px;"/>
+                  </mdb-form-control>
+
+                  <div *ngIf="loginForm.get('password')?.errors?.['required'] && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="alert alert-danger mt-1">
+                    <span>Hasło jest wymagane.</span>
+                  </div>
+
+                  <div *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched" class="alert alert-danger mt-1">
+                    <span>Hasło musi zawierać min. 6 znaków.</span>
+                  </div>
+
+                  <div *ngIf="errorStatusCode === 401" class="alert alert-danger mt-1">
+                    <span>Niepoprawny adres e-mail lub hasło!</span>
+                  </div>
+
+                  <div *ngIf="errorStatusCode === 0" class="alert alert-danger mt-1">
+                    <span>Problem z połączeniem z serwerem!</span>
+                  </div>
+
+                  <div class="form-check">
+                    <input
+                      mdbCheckbox
+                      class="form-check-input"
+                      type="checkbox"
+                      value="true"
+                      id="flexCheckDefault"
+                      formControlName="stayLoggedIn"
+                    />
+                    <label class="form-check-label" for="flexCheckDefault" style="color: rgb(78, 78, 78);">
+                      Nie wylogowuj mnie
+                    </label>
+                  </div>
+
+                  <div class="text-center pt-1 mb-5 mt-4 pb-1">
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 mt-2" type="submit">Zaloguj się</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">Jesteśmy czymś więcej niż cateringiem</h4>
+                <p class="small mb-0">Naszym największym priorytetem jest pacjent. Posiłki przygotowujemy z najwyższej jakości składników, które przyczyniają się do szybszego powrotu do zdrowia.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

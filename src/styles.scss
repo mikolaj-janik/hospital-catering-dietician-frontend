@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+@import 'ngx-toastr/toastr';
+
+@include mat.core();
+
+$default-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$azure-palette,
+            tertiary: mat.$blue-palette,
+        ),
+        density: (
+            scale: -4
+        ),
+    )
+);
+
+
+:root {
+    @include mat.form-field-theme($default-theme);
+}

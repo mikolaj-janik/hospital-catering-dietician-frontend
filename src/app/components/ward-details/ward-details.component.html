@@ -1,0 +1,71 @@
+@if(isResponseHere && ward) {
+    <h2>{{ ward.name }}</h2>
+    <hr>
+    <p class="ms-3">
+        <button class="btn" style="color: white; background-color: rgb(136, 136, 136);" (click)="redirectToHospitalDetails()">Wstecz</button>
+        <button class="btn btn-primary ms-3" (click)="redirectToEditWard()">Edytuj informacje o oddziale</button>
+    </p>
+
+ 
+    <div class="row">
+        <div class="col-lg-2">
+            <h5 class="mt-5">Numer telefonu: </h5>
+            <p>{{ ward.phoneNumber }}</p>
+            <hr>
+            <h5 class="mt-4">Dietetycy: </h5>
+            
+            @if(dieticians.length > 0) {
+                @for(dietician of dieticians; track dietician.id) {
+                    <p style="margin-bottom: 20px;">
+                        <a role="button" title="Kliknij, aby zobaczyć szczegóły dietetyka" (click)="redirectToDieticianDetails(dietician.id)">
+                            {{ dietician.name }} {{ dietician.surname }} {{dietician.email}}
+                        </a>
+                    </p>
+                }
+            } @else {
+                <p>Brak dietetyków</p>
+            }
+            
+            <hr>
+            <h5 class="mt-4">Liczba pacjentów:</h5>
+            @for(diet of diets; track diet.id) {
+                <p class="m-1">dieta {{ diet.name }}: {{ getPatientsQuantityByDietName(diet.name) }}</p>
+            }
+            <p class="m-1">suma: {{ patients.length }}</p>
+        </div>
+        <div class="col-lg-9 col-md-12 mt-3 ms-5">
+            @if(patients.length > 0) {
+                <h3>Pacjenci</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">imię</th>
+                        <th scope="col">nazwisko</th> 
+                        <th scope="col">data przyjęcia</th>
+                        <th scope="col">dieta</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(patient of patients; track patient.id) {
+                        <tr>
+                            <th scope="row">{{ findArrayIndex(patient.id) + 1 }}</th>
+                            <td>{{ patient.name }}</td> 
+                            <td>{{ patient.surname }}</td> 
+                            <td>{{ patient.admissionDate }}</td>
+                            <td>{{ patient.diet.name }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            } @else {
+                <h4>Brak pacjentów na oddziale</h4>
+            }
+                
+            </div>
+        </div>
+} @else if(!isResponseHere) {
+    <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+        <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+    </div>
+}

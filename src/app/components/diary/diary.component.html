@@ -1,0 +1,34 @@
+
+<div class="col-lg-2 col-md-5 flex-column d-flex justify-content-center ms-4" style="background-color: white;">
+  
+</div>
+<div class="row mt-1">
+  <div class="col-lg-2 col-md-4">
+    <h2 class="ms-1">Jadłospis</h2>
+  </div>
+  @if (diets.length > 0) {
+    <div class="col-lg-2 col-md-4 ms-md-4">
+      <mat-form-field style="background-color: white;">
+        <mat-label>rodzaj diety</mat-label>
+        <mat-select name="type" [value]="selectedDiet" (selectionChange)="onDietSelected($event.value)">
+          @for (diet of diets; track diet.id) {
+            <mat-option [value]="diet.id">{{ diet.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  }
+</div>
+<hr>
+@if(isResponseHere) {
+  <div class="calendar-container p-4">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+} @else {
+  <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+    <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+  </div>
+}
+@if(diets.length === 0 && isResponseHere) {
+  <h4>Brak diet w systemie!</h4>
+}

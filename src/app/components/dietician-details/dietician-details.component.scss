@@ -1,0 +1,29 @@
+h2, h4, h5 {
+    font-weight: 400;
+}
+
+a {
+    color:black;
+}
+
+p {
+    padding: 0px;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+img {
+    border-radius: 100%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    width: 250px;
+    height: 250px;
+}
+.col {
+    width: 260px;
+    align-items: center;
+    padding: 0px;
+    text-align: center;
+}

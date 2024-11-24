@@ -1,0 +1,66 @@
+@if (isResponseHere && meals.length === 3) {
+    <h2 class="ms-1">{{ dateStr }}{{" " + day}} <h5 class="mt-1">dieta {{ breakfast.diet?.name }}</h5></h2>
+<hr>
+<p class="mb-5">
+    <button class="btn" style="color: rgb(255, 255, 255); background-color: rgb(134, 134, 134);" (click)="redirectToDiary(breakfast.diet.id)">Wstecz</button>
+    <button class="btn btn-primary ms-3" (click)="redirectToEdit(diary.id)">Edytuj jadłospis</button>
+</p>
+@for(meal of meals; track meal.id) {
+  <h2 class="mt-4" style="font-weight: 400;">{{ meal.type }}</h2>
+  <hr class="meals-divider">
+<div class="col-lg-12 mb-5">
+    <div class="card pb-0" style="padding-bottom: 0px;">
+        <div class="row">
+          <div class="col-lg-2 rounded-start">
+            <a role="button" (click)="openDialog('data:image/jpeg;base64,' + meal.image)">
+            <img
+                [src]="'data:image/jpeg;base64,' + meal.image" 
+                class="rounded-start"
+            />
+            </a>
+          </div>
+          <div class="col-lg-9 ps-2">
+            <div class="card-body mb-1 pe-0 ps-2">
+              <h5 class="card-title">{{ meal.name }}</h5>
+              <p class="card-text" style="margin-left: 0; padding-left: 0;">
+                {{ meal.description }}
+              </p>
+              <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">Kalorie</th>
+                        <th scope="col">Białko</th>
+                        <th scope="col">Węglowodany</th> 
+                        <th scope="col">Tłuszcze</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ meal.calories }} kcal</td>
+                        <td>{{ meal.protein }} g</td> 
+                        <td>{{ meal.carbohydrates }} g</td>
+                        <td>{{ meal.fats }} g</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="col-lg-1 py-4 px-0 d-flex flex-column justify-content-center align-items-center" >
+            <button type="button"
+                class="btn btn-link btn-rounded btn-sm fw-bold mb-3"
+                (click)="redirectToMealDetails(meal.id)"
+            >
+            Więcej
+            </button>
+          </div>
+        </div>
+      </div>
+</div>
+}
+} @else if (!isResponseHere){
+    <div class="row d-flex align-items-center justify-content-center v-100" style="height: 400px;">
+      <img src="./assets/images/loader.gif" style="width: 120px; height: auto;">
+    </div>
+  } @else {
+    <h3 style="font-weight: 400;">Nie znaleziono jadłospisu</h3>
+  }

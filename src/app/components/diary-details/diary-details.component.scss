@@ -1,0 +1,31 @@
+h2 {
+    font-weight: 300;
+}
+
+h5 {
+    font-weight: 400;
+}
+
+table {
+    width: 450px;
+    margin-bottom: 0px;
+}
+
+th {
+    padding-bottom: 5px;
+}
+
+td {
+    padding-top: 0px;
+}
+
+.meals-divider {
+    margin-top: 0px;
+    color:rgb(129, 129, 129);
+}
+
+.card img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
