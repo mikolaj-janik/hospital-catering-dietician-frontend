@@ -60,54 +60,23 @@ export class CustomSidenavComponent {
   menuItems = signal<MenuItem[]>([
     {
       icon: 'fas fa-hospital-alt',
-      label: 'Szpitale',
-      route: 'hospitals',
-      subItems: [
-        {
-          icon: 'fas fa-clinic-medical',
-          label: 'Dodaj szpital',
-          route: 'add',
-        }
-      ]
+      label: 'Moje oddziały',
+      route: 'wards'
     },
     {
       icon: 'fas fa-users',
-      label: 'Dietetycy',
-      route: 'dieticians',
-      subItems: [
-        {
-          icon: 'fas fa-user-plus',
-          label: 'Rejestracja',
-          route: 'register'
-        }
-      ]
+      label: 'Dodaj pacjenta',
+      route: 'dieticians'
     },
     {
-      icon: 'fas fa-utensils',
-      label: 'Posiłki',
-      route: 'meals',
-      subItems: [
-        {
-          icon: 'fas fa-fish',
-          label: 'Dodaj posiłek',
-          route: 'addMeal'
-        },
-        {
-          icon: 'far fa-calendar-alt',
-          label: 'Jadłospis',
-          route: 'diary'
-        },
-        {
-          icon: 'fas fa-carrot',
-          label: 'Diety',
-          route: 'diets',
-        },
-        {
-          icon: 'far fa-calendar-plus',
-          label: 'Dodaj dietę',
-          route: 'addDiet',
-        }
-      ]
+      icon: 'far fa-calendar-alt',
+      label: 'Jadłospis',
+      route: 'meals/diary'
+    },
+    {
+      icon: 'fas fa-carrot',
+      label: 'Diety',
+      route: 'meals/diets',
     }
   ]);
 

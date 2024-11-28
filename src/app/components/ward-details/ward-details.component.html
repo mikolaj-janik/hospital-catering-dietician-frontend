@@ -3,7 +3,6 @@
     <hr>
     <p class="ms-3">
         <button class="btn" style="color: white; background-color: rgb(136, 136, 136);" (click)="redirectToHospitalDetails()">Wstecz</button>
-        <button class="btn btn-primary ms-3" (click)="redirectToEditWard()">Edytuj informacje o oddziale</button>
     </p>
 
  
@@ -17,9 +16,7 @@
             @if(dieticians.length > 0) {
                 @for(dietician of dieticians; track dietician.id) {
                     <p style="margin-bottom: 20px;">
-                        <a role="button" title="Kliknij, aby zobaczyć szczegóły dietetyka" (click)="redirectToDieticianDetails(dietician.id)">
-                            {{ dietician.name }} {{ dietician.surname }} {{dietician.email}}
-                        </a>
+                        {{ dietician.name }} {{ dietician.surname }} {{dietician.email}}
                     </p>
                 }
             } @else {
@@ -43,7 +40,8 @@
                         <th scope="col">imię</th>
                         <th scope="col">nazwisko</th> 
                         <th scope="col">data przyjęcia</th>
-                        <th scope="col">dieta</th> 
+                        <th scope="col">dieta</th>
+                        <th scope="col"></th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +52,15 @@
                             <td>{{ patient.surname }}</td> 
                             <td>{{ patient.admissionDate }}</td>
                             <td>{{ patient.diet.name }}</td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-rounded btn-sm"
+                                    (click)="redirectToPatientDetails(patient.id)"
+                                    >
+                                    zobacz więcej
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>

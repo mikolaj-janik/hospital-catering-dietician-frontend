@@ -41,62 +41,37 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CustomPaginator } from './service/custom-paginator';
 import { CustomSidenavComponent } from "./components/custom-sidenav/custom-sidenav.component";
 import { HospitalsComponent } from './components/hospitals/hospitals.component';
-import { DieticiansComponent } from './components/dieticians/dieticians.component';
-import { MealsComponent } from './components/meals/meals.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchOverlayComponent } from './components/search-overlay/search-overlay.component';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
-import { NewHospitalComponent } from './components/new-hospital/new-hospital.component';
 import { DietComponent } from './components/diet/diet.component';
-import { NewDietComponent } from './components/new-diet/new-diet.component';
 import { DietDetailsComponent } from './components/diet-details/diet-details.component';
-import { EditDietComponent } from './components/edit-diet/edit-diet.component';
-import { NewMealComponent } from './components/new-meal/new-meal.component';
 import { DiaryComponent } from './components/diary/diary.component';
 import { MealDetailsComponent } from './components/meal-details/meal-details.component';
-import { EditMealComponent } from './components/edit-meal/edit-meal.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DiaryDetailsComponent } from './components/diary-details/diary-details.component';
-import { NewDiaryComponent } from './components/new-diary/new-diary.component';
-import { EditDiaryComponent } from './components/edit-diary/edit-diary.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HospitalDetailsComponent } from './components/hospital-details/hospital-details.component';
-import { NewWardComponent } from './components/new-ward/new-ward.component';
-import { EditWardComponent } from './components/edit-ward/edit-ward.component';
 import { WardDetailsComponent } from './components/ward-details/ward-details.component';
 import { DieticianDetailsComponent } from './components/dietician-details/dietician-details.component';
-import { NewDieticianComponent } from './components/new-dietician/new-dietician.component';
 
 
 const routes: Routes = [
-  {path: 'hospitals', component: HospitalsComponent, canActivate: [authGuard]},
-  {path: 'hospitals/details/:id', component: HospitalDetailsComponent, canActivate: [authGuard]},
-  {path: 'hospitals/:id/addWard', component: NewWardComponent, canActivate: [authGuard]},
-  {path: 'hospitals/editWard/:id', component: EditWardComponent, canActivate: [authGuard]},
+  {path: 'wards', component: HospitalDetailsComponent, canActivate: [authGuard]},
+  {path: 'wards/search/:keyword', component: HospitalDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/ward/:id', component: WardDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/search/:keyword', component: HospitalsComponent, canActivate: [authGuard]},
-  {path: 'hospitals/add', component: NewHospitalComponent, canActivate: [authGuard]},
-  {path: 'dieticians', component: DieticiansComponent, canActivate: [authGuard]},
-  {path: 'dieticians/register', component: NewDieticianComponent, canActivate: [authGuard]},
   {path: 'dieticians/details/:id', component: DieticianDetailsComponent, canActivate: [authGuard]},
-  {path: 'meals', component: MealsComponent, canActivate: [authGuard]},
   {path: 'meals/details/:id', component: MealDetailsComponent, canActivate: [authGuard]},
-  {path: 'meals/edit/:id', component: EditMealComponent, canActivate: [authGuard]},
-  {path: 'meals/search/:keyword', component: MealsComponent, canActivate: [authGuard]},
-  {path: 'meals/addMeal', component: NewMealComponent, canActivate: [authGuard]},
   {path: 'meals/diets', component: DietComponent, canActivate: [authGuard]},
   {path: 'meals/diets/search/:keyword', component: DietComponent, canActivate: [authGuard]},
   {path: 'meals/diets/:id', component: DietDetailsComponent, canActivate: [authGuard]},
-  {path: 'meals/diets/edit/:id', component: EditDietComponent, canActivate: [authGuard]},
-  {path: 'meals/addDiet', component: NewDietComponent, canActivate: [authGuard]},
   {path: 'meals/diary', component: DiaryComponent, canActivate: [authGuard]},
-  {path: 'meals/diary/add', component: NewDiaryComponent, canActivate: [authGuard]},
   {path: 'meals/diary/:id', component: DiaryDetailsComponent, canActivate: [authGuard]},
-  {path: 'meals/diary/edit/:id', component: EditDiaryComponent, canActivate: [authGuard]},
   {path: 'login', component: LoginComponent, canActivate: [authGuardLogin]},
   {path: 'logout', component: LoginComponent, canActivate: [authGuardLogin]},
-  {path: '', redirectTo: '/hospitals', pathMatch: 'full'},
-  {path: '**', redirectTo: '/hospitals', pathMatch: 'full'},
+  {path: '', redirectTo: '/wards', pathMatch: 'full'},
+  {path: '**', redirectTo: '/wards', pathMatch: 'full'},
 ]
 
 @NgModule({

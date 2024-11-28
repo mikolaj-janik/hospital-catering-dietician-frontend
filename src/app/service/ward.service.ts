@@ -16,21 +16,12 @@ export class WardService {
 
   constructor(
     private authService: AuthService,
-    private searchBarService: SearchBarService,
     private http: HttpClient,
-    private toastr: ToastrService 
   ) {}
 
-  getWardsByHospitalId(id: number): Observable<Ward[]> {
+  getWardsByDieticianId(id: number, name: string = 'null'): Observable<Ward[]> {
     const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/hospitals/${id}/wards`;
-
-    return this.http.get<Ward[]>(url, { headers });
-  }
-
-  getWardsByDieticianId(id: number): Observable<Ward[]> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/wards?dieticianId=${id}`;
+    const url = `${environment.apiUrl}/wards?dieticianId=${id}&name=${name}`;
 
     return this.http.get<Ward[]>(url, { headers });
   }
@@ -40,29 +31,5 @@ export class WardService {
     const url = `${environment.apiUrl}/wards/${id}`;
 
     return this.http.get<Ward>(url, { headers });
-  }
-
-  createWard(newWard: { name: string, phoneNumber: string, hospital: Hospital, dieticians: Dietician[] }): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/wards/add`;
-
-    return this.http.post(url, newWard, { headers });
-  }
-
-  updateWard(editedWard: { id: number, 
-                           name: string, 
-                           phoneNumber: string, 
-                           dieticians: Dietician[] }): Observable<any> {
-  const headers = this.authService.getAuthHeaders();
-  const url = `${environment.apiUrl}/wards/update`;
-                        
-  return this.http.put(url, editedWard, { headers });                    
-  }
-
-  deleteWardById(id: number): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/wards/${id}`;
-
-    return this.http.delete(url, { headers });
   }
 }

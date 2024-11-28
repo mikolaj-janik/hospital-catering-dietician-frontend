@@ -22,6 +22,7 @@ export class SearchBarService {
   private readonly recentHospitalSearches = 'recentHospitalSearches';
   private readonly recentDietSearches = 'recentDietSearches';
   private readonly recentMealSearches = 'recentMealSearches';
+  private readonly recentWardSearches = 'recentWardSearches';
 
   private routePathSubject = new BehaviorSubject<string>('');
   routePath$: Observable<string> = this.routePathSubject.asObservable();
@@ -63,6 +64,14 @@ export class SearchBarService {
     this.router.navigate([`meals/search/${searchTerm}`]);
   }
 
+  searchWard(searchTerm: string) {
+    this.searchTerm.set(searchTerm);
+    this.overlayOpen.set(false);
+    this.addWardToRecentSearches(searchTerm);
+    console.log(searchTerm);
+    this.router.navigate([`wards/search/${searchTerm}`]);
+  }
+
   getRecentHospitalSearches() {
     const routePath = this.routePathSubject.value;
     if (routePath === '' || routePath === '/hospitals' || routePath.startsWith('/hospitals/search')) {
@@ -77,6 +86,17 @@ export class SearchBarService {
     const routePath = this.routePathSubject.value;
     if (routePath === '/meals/diets' || routePath.startsWith('/meals/diets/search')) {
       let searches = localStorage.getItem(this.recentDietSearches);
+
+      if (searches) {
+        this.recentSearches.set(JSON.parse(searches));
+      }
+    }
+  }
+
+  getRecentWardSearches() {
+    const routePath = this.routePathSubject.value;
+    if (routePath === '/wards' || routePath.startsWith('/wards/search')) {
+      let searches = localStorage.getItem(this.recentWardSearches);
 
       if (searches) {
         this.recentSearches.set(JSON.parse(searches));
@@ -108,6 +128,10 @@ export class SearchBarService {
     } else if (routePath === '/meals' || routePath.startsWith('/meals/search')) {
       const updatedSearches = this.handleDeleteSearch(searchTerm);
       localStorage.setItem(this.recentMealSearches, JSON.stringify(updatedSearches));
+
+    } else if (routePath === '/wards' || routePath.startsWith('/wards/search')) {
+      const updatedSearches = this.handleDeleteSearch(searchTerm);
+      localStorage.setItem(this.recentWardSearches, JSON.stringify(updatedSearches));
     }
   }
 
@@ -127,6 +151,12 @@ export class SearchBarService {
     const updatedSearches = this.handleAddNameToRecentSearches(searchTerm);
     
     localStorage.setItem(this.recentMealSearches, JSON.stringify(updatedSearches));
+  }
+
+  addWardToRecentSearches(searchTerm: string) {
+    const updatedSearches = this.handleAddNameToRecentSearches(searchTerm);
+    
+    localStorage.setItem(this.recentWardSearches, JSON.stringify(updatedSearches));
   }
   
   private handleAddNameToRecentSearches(searchTerm: string) {
@@ -161,6 +191,9 @@ export class SearchBarService {
     }
     if (localStorage.getItem(this.recentMealSearches) === null) {
       localStorage.setItem(this.recentMealSearches, JSON.stringify([]));
+    }
+    if (localStorage.getItem(this.recentWardSearches) === null) {
+      localStorage.setItem(this.recentWardSearches, JSON.stringify([]));
     }
   }
 }

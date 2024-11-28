@@ -52,17 +52,8 @@ export class MealDetailsComponent {
     );
   }
 
-  redirectToMeals() {
-    if (this.requestFromDiary === 0) {
-      this.router.navigate(['meals']);
-    } else {
-      this.router.navigate([`meals/diary/${this.requestFromDiary}`]);
-    }
-    
-  }
-
-  redirectToEdit(id: number) {
-   this.router.navigate([`meals/edit/${id}`]);
+  redirectToDiary() {
+    this.router.navigate([`meals/diary/${this.requestFromDiary}`]);
   }
 
   openDialog(image: string) {

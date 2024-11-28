@@ -44,7 +44,7 @@ export class AppComponent {
   }
 
   activateSearchBar() {
-    if (this.routePath === '' || this.routePath === '/hospitals' || this.routePath.startsWith('/hospitals/search/')
+    if (this.routePath === '' || this.routePath === '/wards' || this.routePath.startsWith('/wards/search/')
     || this.routePath === 'dieticians'
     || this.routePath === '/meals' || this.routePath.startsWith('/meals/search')
     || this.routePath === '/meals/diets' || this.routePath.startsWith('/meals/diets/search')

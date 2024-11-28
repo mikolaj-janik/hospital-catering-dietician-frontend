@@ -3,7 +3,6 @@
 <hr>
 <p class="mb-5">
     <button class="btn" style="color: rgb(255, 255, 255); background-color: rgb(134, 134, 134);" (click)="redirectToDiary(breakfast.diet.id)">Wstecz</button>
-    <button class="btn btn-primary ms-3" (click)="redirectToEdit(diary.id)">Edytuj jadłospis</button>
 </p>
 @for(meal of meals; track meal.id) {
   <h2 class="mt-4" style="font-weight: 400;">{{ meal.type }}</h2>

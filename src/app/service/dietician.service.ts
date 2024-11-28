@@ -15,14 +15,19 @@ export class DieticianService {
 
   constructor(
     private authService: AuthService,
-    private searchBarService: SearchBarService,
     private http: HttpClient,
-    private toastr: ToastrService 
   ) {}
 
   getDieticianById(id: number): Observable<Dietician> {
     const headers = this.authService.getAuthHeaders();
     const url = `${environment.apiUrl}/dieticians/${id}`;
+
+    return this.http.get<Dietician>(url, { headers });
+  }
+
+  getDieticianByEmail(email: string): Observable<Dietician> {
+    const headers = this.authService.getAuthHeaders();
+    const url = `${environment.apiUrl}/dieticians/email/${email}`;
 
     return this.http.get<Dietician>(url, { headers });
   }
@@ -34,13 +39,6 @@ export class DieticianService {
     return this.http.get<Dietician[]>(url, { headers });
   }
 
-  getAllDieticians(hospitalId: number = 0) {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/dieticians?hospitalId=${hospitalId}`;
-
-    return this.http.get<Dietician[]>(url, { headers });
-  }
-
   getDieticiansByWardId(id: number): Observable<Dietician[]> {
     const headers = this.authService.getAuthHeaders();
     const url = `${environment.apiUrl}/wards/${id}/dieticians`;
@@ -48,26 +46,10 @@ export class DieticianService {
     return this.http.get<Dietician[]>(url, { headers });
   }
 
-  registerDietician(dietician: {name: string, surname: string, 
-                                email: string, defaultPassword: string,  
-                                hospitalId: number, wards: Ward[]}): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/dieticians/register`;
-
-    return this.http.post(url, dietician, {headers});                              
-  }
-
   uploadPicture(dieticianId: number, formData: FormData): Observable<Dietician> {
     const headers = this.authService.getAuthHeadersWithFile();
 
     return this.http
     .post<Dietician>(`${environment.apiUrl}/dieticians/uploadPicture?dieticianId=${dieticianId}`, formData, { headers });
-  }
-
-  deleteDieticianById(dieticianId: number): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/dieticians/${dieticianId}`;
-
-    return this.http.delete(url, { headers });
   }
 }

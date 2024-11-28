@@ -94,10 +94,6 @@ export class DiaryComponent {
     dayCellContent: this.customDayCellContent.bind(this)
   };
 
-  onSelectAddDiary(date: Date) {
-    this.router.navigate(['meals/diary/add'], { queryParams: { dietId: this.selectedDiet, date: date.toString() }});
-  }
-
   onSelectDiaryDetails(diaryId: number) {
     this.router.navigate([`meals/diary/${diaryId}`]);
   } 
@@ -126,19 +122,12 @@ export class DiaryComponent {
     let title = 'Jadłospis dodany';
     let disabled = '';
 
-    if (!hasMeal) {
-      buttonType = 'btn-success';
-      buttonText = 'Dodaj jadłospis';
-      title = 'Brak posiłków';
-    } 
-
     if (cellDate < today) {
       disabled = 'disabled';
       buttonTextColor = "color: white;"
     }
 
-    const cellContent = document.createElement('div');
-    cellContent.innerHTML = `
+    let finalContent = `
         <div class="row">
           <span style="color: rgb(110, 110, 110); font-weight: 450;">${dayNumber}</span>
         </div>
@@ -147,15 +136,29 @@ export class DiaryComponent {
           <button class="btn ${buttonType} ${disabled}" style="width: 100%; ${buttonTextColor}">${buttonText}</button>
         </div>
       `;
+
+    if (!hasMeal) {
+      title = 'Brak posiłków';
+      finalContent = `
+        <div class="row" style="width: 100%;">
+          <span style="color: rgb(110, 110, 110); font-weight: 450; width: 100%;">${dayNumber}</span>
+        </div>
+        <div class="mt-5 text-center mt-2">  
+          <span>${title}</span>
+          <button class="disabled" style="width: 100%; visibility: hidden;">Brak jadłospisu</button>
+        </div>
+      `;
+    } 
+
+    const cellContent = document.createElement('div');
+    cellContent.innerHTML = finalContent;
       const button = cellContent.querySelector('button');
       if (button) {
         this.renderer.listen(button, 'click', () => {
           if (hasMeal) {
             const diaryId = this.diaryMap.get(dateStr).id;
             this.onSelectDiaryDetails(diaryId);
-          } else {
-            this.onSelectAddDiary(cellDate);
-          }
+          } 
         });
       }
     return { domNodes: [cellContent] };
@@ -185,8 +188,6 @@ export class DiaryComponent {
       this.datesWithMeals.push(diary.date.toString());
     }
   }
-
-  private 
 
   private refreshCalendar() {
     this.calendarOptions = {

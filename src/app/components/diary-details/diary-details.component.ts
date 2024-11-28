@@ -82,10 +82,6 @@ export class DiaryDetailsComponent {
     this.router.navigate([`meals/details/${mealId}`], { queryParams: { diaryId: this.diary.id }});
   }
 
-  redirectToEdit(diaryId: number) {
-    this.router.navigate([`meals/diary/edit/${diaryId}`]);
-  }
-
   openDialog(image: string) {
     this.dialogRef.open(PopUpComponent, { data : image });
   }

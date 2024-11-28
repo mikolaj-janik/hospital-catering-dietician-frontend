@@ -49,6 +49,9 @@ export class SearchOverlayComponent {
 
     } else if (routePath === '/meals/diets' || routePath.startsWith('/meals/diets/search/')) {
       this.searchBarService.searchDiet(searchTerm);
+
+    } else if (routePath === '/wards' || routePath.startsWith('/wards/search/')) {
+      this.searchBarService.searchWard(searchTerm);
     }
   }
 }

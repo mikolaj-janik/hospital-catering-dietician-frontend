@@ -84,19 +84,11 @@ export class WardDetailsComponent {
     return quantity;
   }
 
-  redirectToEditWard() {
-    this.router.navigate([`hospitals/editWard/${this.ward.id}`]);
-  }
-
-  redirectToDieticianDetails(id: number) {
-    this.router.navigate([`dieticians/details/${id}`], { queryParams: { wardId: this.ward.id }});
+  redirectToPatientDetails(id: number) {
+    // TODO
   }
 
   redirectToHospitalDetails() {
-    if (this.requestFromDieticianDetails === 0) {
-      this.router.navigate([`hospitals/details/${this.ward.hospital.id}`]);
-    } else {
-      this.router.navigate([`dieticians/details/${this.requestFromDieticianDetails}`]);
-    }
+    this.router.navigate([``]);
   }
 }

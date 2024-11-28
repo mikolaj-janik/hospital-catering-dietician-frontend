@@ -1,4 +1,4 @@
-<h2>Dietetycy</h2>
+<h2>Moje informacje</h2>
 <hr>
 <p class="ms-3">
     <button class="btn" style="color: white; background-color: rgb(136, 136, 136);" (click)="redirectToDieticians()">Wstecz</button>
@@ -48,20 +48,8 @@
                                 }
                             </ul>
                         } @else {
-                            <p>Dietetyk nie jest przypisany do żadnego oddziału</p>
+                            <p>Nie jesteś jeszcze przypisany do żadnego oddziału</p>
                         }
-                    </div>
-                    <div class="card-body pt-0">
-                        <button type="button"
-                                class="btn btn-link btn-rounded btn-md"
-                                style="color:#ff4646"
-                                [swal]="{ title: 'Usuń konto dietetyka', text: 'Czy na pewno chcesz usunąć dietetyka? Nie będzie możliwe jego odzyskanie', 
-                                          showCancelButton: true, cancelButtonText: 'Anuluj'
-                                         }"
-                                (confirm)="handleDeleteDietician()"
-                        >
-                        Usuń dietetyka
-                        </button>
                     </div>
                 </div>
             </div>

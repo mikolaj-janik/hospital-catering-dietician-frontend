@@ -80,21 +80,4 @@ export class DieticianDetailsComponent {
   openDialog(image: string) {
     this.dialogRef.open(PopUpComponent, { data : image });
   }
-
-  handleDeleteDietician() {
-    this.dieticianService.deleteDieticianById(this.dietician.id).pipe(
-      catchError((error) => {
-        if (error.status === 400) {
-          this.isErrorResponse = true;
-          Swal.fire("Dietetyk jest przypisany do oddziałów", "Jeżeli chcesz usunąć konto dietetyka, upewnij się, że nie jest przypisany do żadnych oddziałów", 'error');
-          return of(null);
-        }
-      })
-    ).subscribe(() => {
-      if (!this.isErrorResponse) {
-        Swal.fire("Dietetyk usunięty", "Konto dietetyka zostało usunięte", 'success');
-        this.router.navigate(['dieticians']);
-      }
-    });
-  }
 }

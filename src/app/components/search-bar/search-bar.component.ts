@@ -55,6 +55,8 @@ export class SearchBarComponent {
     } else if (routePath === '/meals/diets' || routePath.startsWith('/meals/diets/search')) {
       this.searchBarService.searchDiet(searchTerm);
   
+    } else if (routePath === '/wards' || routePath.startsWith('/wards/search')) {
+      this.searchBarService.searchWard(searchTerm);
     } 
   }
 
@@ -77,6 +79,9 @@ export class SearchBarComponent {
     } else if (routePath === '/meals/diets' || routePath.startsWith('/meals/diets/search')) {
       this.searchBarService.getRecentDietsSearches();
   
+    } else if (routePath === '/wards' || routePath.startsWith('/wards/search')) {
+      this.searchBarService.getRecentWardSearches();
+  
     }
   }
 
@@ -87,6 +92,8 @@ export class SearchBarComponent {
       return 'Szukaj posiłków';
     } else if (routePath === '/meals/diets' || routePath.startsWith('/meals/diets/search')) {
       return 'Szukaj diet';
+    } else if (routePath === '/wards' || routePath.startsWith('/wards/search')) {
+      return 'Szukaj oddziału';
     } else if (routePath === '/dieticians') {
       return 'Szukaj dietetyków';
     } else {

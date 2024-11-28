@@ -10,6 +10,8 @@ import { PatientService } from 'src/app/service/patient.service';
 import { WardService } from 'src/app/service/ward.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
+import { DieticianService } from 'src/app/service/dietician.service';
+import { Dietician } from 'src/app/common/dietician';
 
 @Component({
   selector: 'app-hospital-details',
@@ -22,6 +24,7 @@ export class HospitalDetailsComponent {
 
   hospitalService = inject(HospitalService);
   patientService = inject(PatientService);
+  dieticianService = inject(DieticianService);
   wardService = inject(WardService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -30,54 +33,50 @@ export class HospitalDetailsComponent {
   isResponseHere = false;
   requestFromDieticianDetails = 0;
   isErrorResponse = false;
+  searchMode = false;
 
   hospital: Hospital = null;
+  dietician: Dietician = null;
   wards: Ward[] = [];
   patients: Patient[] = [];
 
   ngOnInit() {
-    const hospitalId = +this.route.snapshot.paramMap.get('id')!;
+    const userEmail = localStorage.getItem('USER_EMAIL');
 
-    if (this.route.snapshot.queryParamMap.has('dieticianId') && +this.route.snapshot.queryParamMap.get('dieticianId') > 0) {
-      this.requestFromDieticianDetails = +this.route.snapshot.queryParamMap.get('dieticianId');
-    } 
+    this.dieticianService.getDieticianByEmail(userEmail).subscribe((data) => {
+      this.dietician = data;
+      this.hospital = data.hospital;
 
-    this.hospitalService.getHospitalById(hospitalId).pipe(
-      catchError((error) => {
-        if (error.status === 404) {
-          this.toastr.error(`Szpital z id: ${hospitalId} nie istnieje!`);
-          this.router.navigate(['hospitals']);
-          return of(null);
-        }
-      })
-    ).subscribe((data) => {
-      this.hospital = data;
-      
-      this.wardService.getWardsByHospitalId(hospitalId).subscribe((data) => {
-        this.wards = data;
+      this.patientService.getPatientsByHospitalId(this.dietician.hospital.id).subscribe((data) => {
+        this.patients = data;
 
-        this.patientService.getPatientsByHospitalId(hospitalId).subscribe((data) => {
-          this.patients = data;
-          this.isResponseHere = true;
-        });
+        this.route.paramMap.subscribe(() => this.handleSearchWards());
       });
+      
     });
+  }
+
+  handleSearchWards() {
+    this.isResponseHere = false;
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+
+    if (this.searchMode) {
+      const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
+
+      this.wardService.getWardsByDieticianId(this.dietician.id, keyword).subscribe((data) => {
+        this.wards = data;
+        this.isResponseHere = true;
+      });
+    } else {
+      this.wardService.getWardsByDieticianId(this.dietician.id).subscribe((data) => {
+        this.wards = data;
+        this.isResponseHere = true;
+      });
+    }
   }
 
   findArrayIndex(id: number) {
     return this.wards.findIndex(ward => ward.id === id);
-  }
-
-  redirectToHospitals() {
-    if (this.requestFromDieticianDetails === 0) {
-      this.router.navigate(['hospitals']);
-    } else {
-      this.router.navigate([`dieticians/details/${this.requestFromDieticianDetails}`]);
-    }
-  }
-
-  redirectToAddWard() {
-    this.router.navigate([`hospitals/${this.hospital.id}/addWard`]);
   }
 
   getPatientsQuantity(wardId: number) {
@@ -92,31 +91,5 @@ export class HospitalDetailsComponent {
 
   redirectToWardDetails(wardId: number) {
     this.router.navigate([`hospitals/ward/${wardId}`]);
-  }
-
-  handleDeleteWard(wardId: number) {
-    this.wardService.deleteWardById(wardId).pipe(
-      catchError((error) => {
-        if (error.status === 400) {
-          this.isErrorResponse = true;
-          const errorMessage = error.error.message;
-
-          if (errorMessage.includes('patients')) {
-            Swal.fire("Oddział posiada pacjentów", "Jeżeli chcesz usunąć oddział, upewnij się, że nie ma przypisanych żadnych pacjentów", 'error');
-
-          } else if (errorMessage.includes('dieticians')) {
-            Swal.fire("Oddział ma przypisanych dietetyków", "Jeżeli chcesz usunąć oddział, upewnij się, że nie ma przypisanego żadnego dietetyka", 'error');
-          }
-          
-          return of(null);
-        }
-      })
-    ).subscribe(() => {
-      if (!this.isErrorResponse) {
-        Swal.fire("Oddział został usunięty", "Oddział został usunięty pomyślnie", 'success').then(() => {
-          window.location.reload();
-        });
-      }
-    });
   }
 }

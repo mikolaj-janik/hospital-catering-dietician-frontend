@@ -63,39 +63,4 @@ export class DietService {
 
     return this.http.get<Diet[]>(url, { headers });
   }
-
-  updateDiet(diet: {id: number, name: string, description: string}): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-
-    return this.http
-    .put(`${environment.apiUrl}/diets/update`, diet, { headers });
-  }
-
-  addNewDiet(diet: {name: string, description: string}, newDietForm: FormGroup): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-
-    return this.http
-    .post(`${environment.apiUrl}/diets/add`, diet, { headers })
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-       if (error.status === 0) {
-          this.authService.handleServerConnectionError();
-        } else if (error.status === 400) {
-          newDietForm.get('name')?.setErrors({ uniqueNameError: true });
-        } else {
-          this.toastr.error('Wystąpił problem z dodawaniem diety');
-        }
-        errorMessage = error.error.message;
-        console.error(errorMessage);
-        return throwError(() => new Error(errorMessage));
-      })
-    );
-  }
-
-  deleteDietById(id: number): Observable<any> {
-    const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/diets/delete/${id}`;
-    return this.http.delete(url, { headers });
-  }
 }
