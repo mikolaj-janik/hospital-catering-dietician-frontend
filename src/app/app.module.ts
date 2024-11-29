@@ -55,12 +55,14 @@ import { HospitalDetailsComponent } from './components/hospital-details/hospital
 import { WardDetailsComponent } from './components/ward-details/ward-details.component';
 import { DieticianDetailsComponent } from './components/dietician-details/dietician-details.component';
 import { NewPatientComponent } from './components/new-patient/new-patient.component';
+import { PatientDetailsComponent } from './components/patient-details/patient-details.component';
 
 
 const routes: Routes = [
   {path: 'wards', component: HospitalDetailsComponent, canActivate: [authGuard]},
   {path: 'wards/search/:keyword', component: HospitalDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/ward/:id', component: WardDetailsComponent, canActivate: [authGuard]},
+  {path: 'patients/:id', component: PatientDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/search/:keyword', component: HospitalsComponent, canActivate: [authGuard]},
   {path: 'registerPatient', component: NewPatientComponent, canActivate: [authGuard]},
   {path: 'dieticians/details/:id', component: DieticianDetailsComponent, canActivate: [authGuard]},

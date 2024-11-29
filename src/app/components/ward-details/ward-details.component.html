@@ -53,6 +53,7 @@
                         <th scope="col">data przyjęcia</th>
                         <th scope="col">dieta</th>
                         <th scope="col"></th> 
+                        <th scope="col"></th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +72,15 @@
                                     >
                                     zobacz więcej
                                 </button>
+                            </td>
+                            <td>
+                                <a role="button" class="fas fa-trash-alt mt-3" 
+                                style="color: rgb(192, 35, 35);"
+                                [swal]="{ title: 'Usuń pacjenta', text: 'Czy na pewno chcesz usunąć konto pacjenta? Upewnij się że został już wypisany ze szpitala!', 
+                                  showCancelButton: true, cancelButtonText: 'Anuluj'
+                                 }"
+                                (confirm)="handleDeletePatient(patient.id)" 
+                                ></a>
                             </td>
                         </tr>
                     }

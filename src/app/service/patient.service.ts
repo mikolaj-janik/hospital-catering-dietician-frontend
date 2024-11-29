@@ -16,6 +16,13 @@ export class PatientService {
     private http: HttpClient,
   ) {}
 
+  getPatientById(id: number): Observable<Patient> {
+    const headers = this.authService.getAuthHeaders();
+    const url = `${environment.apiUrl}/patients/${id}`;
+
+    return this.http.get<Patient>(url, { headers });
+  }
+
   getPatientsByWardId(id: number, orderBy: string = 'date'): Observable<Patient[]> {
     const headers = this.authService.getAuthHeaders();
     const url = `${environment.apiUrl}/patients/ward/${id}?orderBy=${orderBy}`;
@@ -37,5 +44,21 @@ export class PatientService {
       const url = `${environment.apiUrl}/patients/register`;
 
       return this.http.post(url, patient, { headers });
+    }
+
+    editPatient(patient: { id: number, name: string, 
+      surname: string, login: string, 
+      email: string, wardId: number, dietId: number }): Observable<any> {
+        const headers = this.authService.getAuthHeaders();
+        const url = `${environment.apiUrl}/patients/edit`;
+  
+      return this.http.post(url, patient, { headers });
+    }
+
+    deletePatientById(id: number): Observable<any> {
+      const headers = this.authService.getAuthHeaders();
+      const url = `${environment.apiUrl}/patients/delete/${id}`;
+
+      return this.http.delete(url, { headers });
     }
 }

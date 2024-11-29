@@ -12,11 +12,13 @@ import { MatTableModule } from '@angular/material/table';
 import { Diet } from 'src/app/common/diet';
 import { DietService } from 'src/app/service/diet.service';
 import { MatSelectModule } from '@angular/material/select';
+import Swal from 'sweetalert2';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-ward-details',
   standalone: true,
-  imports: [MatTableModule, MatSelectModule],
+  imports: [MatTableModule, MatSelectModule, SweetAlert2Module],
   templateUrl: './ward-details.component.html',
   styleUrl: './ward-details.component.scss'
 })
@@ -94,8 +96,16 @@ export class WardDetailsComponent {
     return quantity;
   }
 
+  handleDeletePatient(id: number) {
+    this.patientService.deletePatientById(id).subscribe(() => {
+      Swal.fire("Usunięto pacjenta", "Pomyślnie usunięto konto pacjenta", 'info').then(() => {
+        window.location.reload();
+      });
+    });
+  }
+
   redirectToPatientDetails(id: number) {
-    // TODO
+    this.router.navigate([`patients/${id}`]);
   }
 
   redirectToHospitalDetails() {
