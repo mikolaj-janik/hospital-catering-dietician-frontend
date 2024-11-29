@@ -54,6 +54,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HospitalDetailsComponent } from './components/hospital-details/hospital-details.component';
 import { WardDetailsComponent } from './components/ward-details/ward-details.component';
 import { DieticianDetailsComponent } from './components/dietician-details/dietician-details.component';
+import { NewPatientComponent } from './components/new-patient/new-patient.component';
 
 
 const routes: Routes = [
@@ -61,6 +62,7 @@ const routes: Routes = [
   {path: 'wards/search/:keyword', component: HospitalDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/ward/:id', component: WardDetailsComponent, canActivate: [authGuard]},
   {path: 'hospitals/search/:keyword', component: HospitalsComponent, canActivate: [authGuard]},
+  {path: 'registerPatient', component: NewPatientComponent, canActivate: [authGuard]},
   {path: 'dieticians/details/:id', component: DieticianDetailsComponent, canActivate: [authGuard]},
   {path: 'meals/details/:id', component: MealDetailsComponent, canActivate: [authGuard]},
   {path: 'meals/diets', component: DietComponent, canActivate: [authGuard]},

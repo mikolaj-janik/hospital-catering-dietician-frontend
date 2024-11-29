@@ -1,0 +1,110 @@
+<h2>Pacjenci</h2>
+<hr>
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card col-lg-5 col-md-9 col-sm-12 px-4" style="padding-top: 25px; padding-bottom: 20px;">
+        <h4>Rejestracja pacjenta</h4>
+        <hr class="mt-2">
+        <form [formGroup]="newPatientForm" (ngSubmit)="submitNewPatient()">
+            <h5>Dane osobiste</h5>
+            <p class="mb-4 mt-3">
+                <mat-form-field class="d-flex">
+                    <mat-label>Imię</mat-label>
+                    <input matInput placeholder="Podaj imię" formControlName="name"/>
+                    @if(newPatientForm.get('name')?.errors?.['required'] && (newPatientForm.get('name')?.dirty || newPatientForm.get('name')?.touched)) {
+                        <mat-error>Imię jest wymagane</mat-error>
+                    }
+                    @if(newPatientForm.get('name')?.errors?.['maxlength'] && (newPatientForm.get('name')?.dirty || newPatientForm.get('name')?.touched)) {
+                        <mat-error>Imię jest zbyt długie</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+
+            <p class="mb-4">
+                <mat-form-field class="d-flex">
+                    <mat-label>Nazwisko</mat-label>
+                    <input matInput placeholder="Podaj nazwisko" formControlName="surname"/>
+                    @if(newPatientForm.get('surname')?.errors?.['required'] && (newPatientForm.get('surname')?.dirty || newPatientForm.get('surname')?.touched)) {
+                        <mat-error>Nazwisko jest wymagane</mat-error>
+                    }
+                    @if(newPatientForm.get('surname')?.errors?.['maxlength'] && (newPatientForm.get('surname')?.dirty || newPatientForm.get('surname')?.touched)) {
+                        <mat-error>Nazwisko jest zbyt długie</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+
+            <p class="mb-4">
+                <mat-form-field class="d-flex">
+                    <mat-label>Pesel</mat-label>
+                    <input matInput placeholder="Podaj pesel" formControlName="pesel"/>
+                    @if(newPatientForm.get('pesel')?.errors?.['required'] && (newPatientForm.get('pesel')?.dirty || newPatientForm.get('pesel')?.touched)) {
+                        <mat-error>Pesel jest wymagany</mat-error>
+                    }
+                    @if(newPatientForm.get('pesel')?.errors?.['pattern'] && (newPatientForm.get('pesel')?.dirty || newPatientForm.get('pesel')?.touched)) {
+                        <mat-error>To nie jest numer pesel</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+
+            <p class="mb-4">
+                <mat-form-field class="d-flex">
+                    <mat-label>Adres email (opcjonalne)</mat-label>
+                    <i matSuffix class="far fa-envelope me-3"></i>
+                    <input matInput placeholder="Wpisz adres email" formControlName="email"/>
+                    @if(newPatientForm.get('email')?.errors?.['email'] && (newPatientForm.get('email')?.dirty || newPatientForm.get('email')?.touched)) {
+                        <mat-error>To nie jest adres email</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+
+            <p class="mb-4">
+                <mat-form-field class="d-flex">
+                    <mat-label>Domyślne hasło</mat-label>
+                    @if (hiddenPassword) {
+                        <i matSuffix (click)="toggleHiddenPassword()" class="fas fa-eye-slash me-3"></i>
+                    } @else {
+                        <i matSuffix (click)="toggleHiddenPassword()" class="fas fa-eye me-3"></i>
+                    }
+                    <input matInput placeholder="Podaj domyślne hasło" [type]="hiddenPassword ? 'password' : 'text'" formControlName="defaultPassword">
+                    @if(newPatientForm.get('defaultPassword')?.errors?.['required'] && (newPatientForm.get('defaultPassword')?.dirty || newPatientForm.get('defaultPassword')?.touched)) {
+                        <mat-error>Adres email jest wymagany</mat-error>
+                    }
+                    @if(newPatientForm.get('defaultPassword')?.errors?.['pattern'] && (newPatientForm.get('defaultPassword')?.dirty || newPatientForm.get('defaultPassword')?.touched)) {
+                        <mat-error>Hasło musi posiadać od 8 do 16 znaków, przynajmniej 1 wielką oraz małą literę oraz znak specjalny</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+
+            <hr>
+
+            <h5>Dane szpitalne</h5>
+            <p class="mb-4 mt-3">
+                <mat-form-field class="d-flex">
+                    <mat-label>oddział</mat-label>
+                    <i matSuffix class="far fa-hospital me-3"></i>
+                    <mat-select name="ward" formControlName="wardId" (selectionChange)="handleSelectWard($event.value)">
+                      @for (ward of wards; track ward.id) {
+                        <mat-option [value]="ward.id">{{ ward.name }}</mat-option>
+                      }
+                    </mat-select>
+                </mat-form-field>
+            </p>
+
+            <p class="mb-4 mt-3">
+                <mat-form-field class="d-flex">
+                    <mat-label>dieta</mat-label>
+                    <i matSuffix class="fas fa-utensils me-3"></i>
+                    <mat-select name="diet" formControlName="dietId" (selectionChange)="handleSelectDiet($event.value)">
+                      @for (diet of diets; track diet.id) {
+                        <mat-option [value]="diet.id">{{ diet.name }}</mat-option>
+                      }
+                    </mat-select>
+                </mat-form-field>
+            </p>
+
+            <p class="d-flex justify-content-center">
+                <button mat-flat-button class="btn btn-primary" type="submit">Zarejestruj pacjenta</button>
+            </p>
+        </form>
+    </div>
+</div>
+

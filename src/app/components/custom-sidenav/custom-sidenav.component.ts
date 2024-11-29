@@ -66,7 +66,7 @@ export class CustomSidenavComponent {
     {
       icon: 'fas fa-users',
       label: 'Dodaj pacjenta',
-      route: 'dieticians'
+      route: 'registerPatient'
     },
     {
       icon: 'far fa-calendar-alt',

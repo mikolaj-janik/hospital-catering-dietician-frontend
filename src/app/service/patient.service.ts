@@ -14,12 +14,11 @@ export class PatientService {
   constructor(
     private authService: AuthService,
     private http: HttpClient,
-    private toastr: ToastrService 
   ) {}
 
-  getPatientsByWardId(id: number): Observable<Patient[]> {
+  getPatientsByWardId(id: number, orderBy: string = 'date'): Observable<Patient[]> {
     const headers = this.authService.getAuthHeaders();
-    const url = `${environment.apiUrl}/patients/ward/${id}`;
+    const url = `${environment.apiUrl}/patients/ward/${id}?orderBy=${orderBy}`;
 
     return this.http.get<Patient[]>(url, { headers });
   }
@@ -30,4 +29,13 @@ export class PatientService {
 
     return this.http.get<Patient[]>(url, { headers });
   }
+
+  registerPatient(patient: { name: string, 
+    surname: string, pesel: string, defaultPassword: string, 
+    email: string, wardId: number, dietId: number }): Observable<any> {
+      const headers = this.authService.getAuthHeaders();
+      const url = `${environment.apiUrl}/patients/register`;
+
+      return this.http.post(url, patient, { headers });
+    }
 }

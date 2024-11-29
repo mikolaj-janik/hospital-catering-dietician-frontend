@@ -11,11 +11,12 @@ import { WardService } from 'src/app/service/ward.service';
 import { MatTableModule } from '@angular/material/table';
 import { Diet } from 'src/app/common/diet';
 import { DietService } from 'src/app/service/diet.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-ward-details',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatSelectModule],
   templateUrl: './ward-details.component.html',
   styleUrl: './ward-details.component.scss'
 })
@@ -58,7 +59,7 @@ export class WardDetailsComponent {
       this.dieticianService.getDieticiansByWardId(wardId).subscribe((data) => {
         this.dieticians = data;
 
-        this.patientService.getPatientsByWardId(wardId).subscribe((data) => {
+        this.patientService.getPatientsByWardId(wardId, "date").subscribe((data) => {
           this.patients = data;
           
           this.dietService.getDietsByWardId(wardId).subscribe((data) => {
@@ -67,6 +68,15 @@ export class WardDetailsComponent {
           });
         });
       });
+    });
+  }
+
+  onSelectOrderBy(name: string) {
+    this.isResponseHere = false;
+
+    this.patientService.getPatientsByWardId(this.ward.id, name).subscribe((data) => {
+      this.patients = data;
+      this.isResponseHere = true;
     });
   }
 
